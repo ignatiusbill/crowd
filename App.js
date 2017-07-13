@@ -35,9 +35,6 @@ const styles = StyleSheet.create({
  * Represents a timer that is invisible when duration is less than 0.
  * 
  * @prop {int} duration - duration of the timer.
- * 
- * Note: Currently, componentWillUnmount is never invoked.
- *       Will find a way to invoke it to make sure there's no memory leak.
  */
 class Timer extends Component {
   constructor(props) {
