@@ -1,0 +1,44 @@
+import React from 'react';
+import { Text } from 'react-native';
+import { Accelerometer } from 'react-native-sensors';
+
+const MotionSensor = ({ duration, words }) => {
+    const wordCount = Object.keys(words).length;
+    let index = 1;
+
+    const accelerationObservable = new Accelerometer({
+        updateInterval: 500,
+    });
+
+    accelerationObservable
+        .map(({ z }) => z)
+        .subscribe(speed => processMotion(speed));
+
+    setTimeout(() => {
+        accelerationObservable.stop();
+    }, duration);
+
+    return (
+        <Text>Current word: {words[index].word}</Text>
+    );
+};
+
+// function showWord() {
+//     return <Text>Current word: {this.words[this.index].word}</Text>;
+// }
+
+function processMotion(speed) {
+    if (speed > -10 && speed < 7) {
+        console.log('thinking');
+        return;
+    } else if (speed <= -10) {
+        console.log('OK');
+    } else {
+        console.log('PASS');
+    }
+
+    this.index += 1;
+    console.log(this.index);
+}
+
+export { MotionSensor };
