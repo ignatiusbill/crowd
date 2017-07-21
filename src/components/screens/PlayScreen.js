@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import { Timer, MotionSensor } from '..';
 import { CardSection } from '../common';
+import data from '../data.json';
 
 class PlayScreen extends Component {
     static navigationOptions = {
@@ -47,11 +48,7 @@ class PlayScreen extends Component {
                 <Timer duration={gameDuration} />
                 <MotionSensor
                     duration={gameDuration} 
-                    words={[
-                        { word: 'Apple' },
-                        { word: 'Banana' },
-                        { word: 'Candy' }
-                    ]}
+                    words={data}
                 />
             </CardSection>
         );

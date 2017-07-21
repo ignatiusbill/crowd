@@ -7,9 +7,8 @@ class MotionSensor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            words: props.words,
+            data: props.words,
             index: 0,
-            wordCount: props.words.length,
             accelerationObservable: new Accelerometer({ updateInterval: 500 })
         };
     }
@@ -34,12 +33,12 @@ class MotionSensor extends Component {
         const { index } = this.state;
 
         if (speed > -10 && speed < 7) {
-            console.log('thinking');
+            // console.log('thinking');
             return;
         } else if (speed <= -10) {
-            console.log('OK');
+            // console.log('OK');
         } else {
-            console.log('PASS');
+            // console.log('PASS');
         }
 
         this.setState({
@@ -48,13 +47,14 @@ class MotionSensor extends Component {
     }
 
     renderWords() {
-        const { words, index, wordCount } = this.state;
-
+        const { data, index } = this.state;
+        const wordCount = this.state.data.length;
+        
         if (index >= wordCount) {
             return <MyText>We're out of words!</MyText>;
         }
 
-        return <MyText>Current word: {words[index].word}</MyText>;
+        return <MyText>Current word: {data[index].word}</MyText>;
     }
 
     render() {
