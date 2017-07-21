@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { Accelerometer } from 'react-native-sensors';
+import { MyText } from './common';
 
 class MotionSensor extends Component {
     constructor(props) {
@@ -8,15 +9,14 @@ class MotionSensor extends Component {
         this.state = {
             words: props.words,
             index: 0,
-            wordCount: props.words.length
+            wordCount: props.words.length,
+            accelerationObservable: new Accelerometer({ updateInterval: 500 })
         };
     }
 
     componentWillMount() {
-        const accelerationObservable = new Accelerometer({
-            updateInterval: 500
-        });
-
+        const { accelerationObservable } = this.state;
+        
         accelerationObservable
             .map(({ z }) => z)
             .subscribe(speed => this.processMotion(speed));
@@ -24,6 +24,10 @@ class MotionSensor extends Component {
         setTimeout(() => {
             accelerationObservable.stop();
         }, this.props.duration * 1000);
+    }
+
+    componentWillUnmount() {
+        this.state.accelerationObservable.stop();
     }
 
     processMotion(speed) {
@@ -47,10 +51,10 @@ class MotionSensor extends Component {
         const { words, index, wordCount } = this.state;
 
         if (index >= wordCount) {
-            return <Text>We're out of words!</Text>;
+            return <MyText>We're out of words!</MyText>;
         }
 
-        return <Text>Current word: {words[index].word}</Text>;
+        return <MyText>Current word: {words[index].word}</MyText>;
     }
 
     render() {

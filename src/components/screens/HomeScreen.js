@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import Orientation from 'react-native-orientation-locker';
+import { CardSection, Button, MyText } from '../common';
 
 class HomeScreen extends Component {
     static navigationOptions = {
         header: null
     };
-    
+
+    componentDidMount() {
+        Orientation.lockToPortrait();
+    }
+
     render() {
         const { navigate } = this.props.navigation;
 
         return (
-            <View>
-                <Text>Crowd</Text>
-                <Button 
-                    title='Play'
-                    onPress={() => navigate('Play')} 
-                />
-            </View>
+            <CardSection>
+                <MyText>Crowd</MyText>
+                <Button onPress={() => navigate('Play')}>Play</Button>
+            </CardSection>
         );
     }
 }

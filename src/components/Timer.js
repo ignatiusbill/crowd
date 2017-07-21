@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import { MyText } from './common';
 
 class Timer extends Component {
     constructor(props) {
@@ -42,7 +43,7 @@ class Timer extends Component {
         if (duration >= 1 && waitForToShow > 0) {
             return;
         } else if (duration >= 1 && waitForToShow <= 0) {
-            return <Text>{text}{'\n'}{duration}</Text>;
+            return <MyText>{text}{'\n'}{duration}</MyText>;
         }
 
         this.componentWillUnmount();

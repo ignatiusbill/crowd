@@ -1,11 +1,10 @@
 import { StackNavigator } from 'react-navigation';
-import { HomeScreen, PlayScreen } from './components/screens';
-// import ScoreboardScreen from './src/components/screens/ScoreboardScreen';
+import { HomeScreen, PlayScreen, ScoreboardScreen } from './components/screens';
 
 const App = StackNavigator({
-    Play: { screen: PlayScreen },
     Home: { screen: HomeScreen },
-    // Scoreboard: { screen: ScoreboardScreen }
+    Play: { screen: PlayScreen },
+    Scoreboard: { screen: ScoreboardScreen }
 });
 
 export default App;
