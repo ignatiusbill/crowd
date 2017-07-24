@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Orientation from 'react-native-orientation-locker';
+import { connect } from 'react-redux';
 import { CardSection, MyText } from '../common';
+import words from '../../reducers/words.json';
 
 class ScoreboardScreen extends Component {
     static navigationOptions = {
@@ -12,12 +14,20 @@ class ScoreboardScreen extends Component {
     }
 
     render() {
+        const { score } = this.props;
+
         return (
             <CardSection>
-                <MyText>ScoreboardScreen.js</MyText>
+                <MyText>Your score: {score}/{words.length}</MyText>
             </CardSection>
         );
     }
 }
 
-export { ScoreboardScreen };
+const mapStateToProps = state => {
+    return {
+        score: state.user.score
+    };
+};
+
+export default connect(mapStateToProps)(ScoreboardScreen);

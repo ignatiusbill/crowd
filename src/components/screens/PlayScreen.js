@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
-import { Timer, MotionSensor } from '..';
+import { Timer } from '..';
+import MotionSensor from '../MotionSensor';
 import { CardSection } from '../common';
-import data from '../data.json';
+import words from '../../reducers/words.json';
 
 class PlayScreen extends Component {
     static navigationOptions = {
@@ -13,7 +14,7 @@ class PlayScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameDuration: 3,
+            gameDuration: 5,
             delayBeforeScoreboard: 1
         };
     }
@@ -48,7 +49,7 @@ class PlayScreen extends Component {
                 <Timer duration={gameDuration} />
                 <MotionSensor
                     duration={gameDuration} 
-                    words={data}
+                    words={words}
                 />
             </CardSection>
         );
@@ -63,4 +64,4 @@ class PlayScreen extends Component {
     }
 }
 
-export { PlayScreen };
+export default PlayScreen;

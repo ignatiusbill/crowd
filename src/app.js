@@ -1,10 +1,17 @@
-import { StackNavigator } from 'react-navigation';
-import { HomeScreen, PlayScreen, ScoreboardScreen } from './components/screens';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducers from './reducers';
+import ScreenContainer from './components/ScreenContainer';
 
-const App = StackNavigator({
-    Home: { screen: HomeScreen },
-    Play: { screen: PlayScreen },
-    Scoreboard: { screen: ScoreboardScreen }
-});
+class App extends Component {
+    render() {
+        return (
+            <Provider store={createStore(reducers)}>
+                <ScreenContainer />
+            </Provider>
+        );
+    }
+}
 
 export default App;
