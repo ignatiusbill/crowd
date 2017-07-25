@@ -14,7 +14,7 @@ class PlayScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameDuration: 5,
+            gameDuration: 3,
             delayBeforeScoreboard: 1
         };
     }
@@ -37,8 +37,9 @@ class PlayScreen extends Component {
 
     navigateToScoreboard() {
         const { navigate } = this.props.navigation;
+        const { key } = this.props.navigation.state;
         
-        return navigate('Scoreboard');
+        return navigate('Scoreboard', { HomeKey: key });
     }
 
     startGame() {

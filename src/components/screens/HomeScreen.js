@@ -17,7 +17,9 @@ class HomeScreen extends Component {
         return (
             <CardSection>
                 <MyText>Crowd</MyText>
-                <Button onPress={() => navigate('Play')}>Play</Button>
+                <Button onPress={() => navigate('Play')}>
+                    Play
+                </Button>
             </CardSection>
         );
     }

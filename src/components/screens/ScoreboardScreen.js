@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Orientation from 'react-native-orientation-locker';
 import { connect } from 'react-redux';
-import { CardSection, MyText } from '../common';
+import { NavigationActions } from 'react-navigation';
+import { CardSection, MyText, Button } from '../common';
 import words from '../../reducers/words.json';
 
 class ScoreboardScreen extends Component {
@@ -13,12 +14,22 @@ class ScoreboardScreen extends Component {
         Orientation.lockToPortrait();
     }
 
+    navToHome() {
+        const { goBack } = this.props.navigation;
+        const { HomeKey } = this.props.navigation.state.params;
+
+        goBack(HomeKey);
+    }
+    
     render() {
         const { score } = this.props;
 
         return (
             <CardSection>
                 <MyText>Your score: {score}/{words.length}</MyText>
+                <Button onPress={() => this.navToHome()}>
+                     Go to Main Menu
+                </Button> 
             </CardSection>
         );
     }
