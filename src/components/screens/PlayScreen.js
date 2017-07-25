@@ -14,7 +14,7 @@ class PlayScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameDuration: 3,
+            gameDuration: 5,
             delayBeforeScoreboard: 1
         };
     }

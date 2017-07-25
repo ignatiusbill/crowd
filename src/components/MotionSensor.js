@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Accelerometer } from 'react-native-sensors';
 import { connect } from 'react-redux';
 import { MyText } from './common';
-import { incrementScore, pass } from '../actions';
+import { incrementScore, pass, isAnswering, doneAnswering } from '../actions';
 
 class MotionSensor extends Component {
     constructor(props) {
@@ -41,25 +41,31 @@ class MotionSensor extends Component {
 
     processMotion(speed) {
         const { index } = this.state;
-        const { score } = this.props;
+        const { score, hasAnswered } = this.props;
         const wordCount = this.state.words.length;
 
-        if (speed > -10 && speed < 7) {
-            // console.log('thinking');
-            return;
-        } else if (speed <= -10) {
-            // console.log('OK');
-            if (score < wordCount) {
-                this.props.incrementScore(score);
-            }
-        } else {
-            // console.log('PASS');
-            this.props.pass(score);
-        }
+        const isThinking = speed > -10 && speed < 7;
+        const isCorrect = speed <= -10;
 
-        this.setState({
-            index: index + 1
-        });
+        if (isThinking) {
+            this.props.doneAnswering();
+            return;
+        }
+        
+        if (!hasAnswered) {
+            if (isCorrect) {
+                if (score < wordCount) {
+                    this.props.incrementScore(score);
+                }
+            } else { // PASS
+                this.props.pass(score);
+            }
+
+            this.props.isAnswering();
+            this.setState({
+                index: index + 1
+            });
+        }
     }
 
     renderWords() {
@@ -84,8 +90,12 @@ class MotionSensor extends Component {
 
 const mapStateToProps = state => {
     return {
-        score: state.user.score
+        score: state.user.score,
+        hasAnswered: state.user.hasAnswered
     };
 };
 
-export default connect(mapStateToProps, { incrementScore, pass })(MotionSensor);
+export default connect(
+    mapStateToProps, 
+    { incrementScore, pass, isAnswering, doneAnswering }
+)(MotionSensor);
