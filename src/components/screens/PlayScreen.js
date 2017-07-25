@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
+import { connect } from 'react-redux';
 import { Timer } from '..';
 import MotionSensor from '../MotionSensor';
 import { CardSection } from '../common';
 import words from '../../reducers/words.json';
+import { resetScore } from '../../actions';
 
 class PlayScreen extends Component {
     static navigationOptions = {
@@ -17,6 +19,7 @@ class PlayScreen extends Component {
             gameDuration: 5,
             delayBeforeScoreboard: 1
         };
+        this.props.resetScore();
     }
 
     componentDidMount() {
@@ -65,4 +68,4 @@ class PlayScreen extends Component {
     }
 }
 
-export default PlayScreen;
+export default connect(null, { resetScore })(PlayScreen);

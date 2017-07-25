@@ -1,12 +1,27 @@
 import user from './user.json';
-import { INCREMENT_SCORE, PASS, IS_ANSWERING, DONE_ANSWERING } from '../actions/types';
+import { 
+    RESET_SCORE,
+    INCREMENT_SCORE, 
+    PASS, 
+    IS_ANSWERING, 
+    DONE_ANSWERING 
+} from '../actions/types';
 
 const INITIAL_STATE = { score: user.score, hasAnswered: user.hasAnswered };
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
+        case RESET_SCORE:
+            return { ...state, score: 0 };
         case INCREMENT_SCORE:
             return { ...state, score: action.payload + 1 };
+        /* case PASS - to be replaced with some other logic
+         * Right now, Scoreboard is only showing <# of correct answers>/<total # of words>
+         * so this returning just state is OK
+         * 
+         * In the future, would love to change it to a key-value pair showing which one's 
+         * right or wrong
+         */
         case PASS:
             return state;
         case IS_ANSWERING:

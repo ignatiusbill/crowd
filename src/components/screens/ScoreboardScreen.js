@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Orientation from 'react-native-orientation-locker';
 import { connect } from 'react-redux';
-import { NavigationActions } from 'react-navigation';
 import { CardSection, MyText, Button } from '../common';
 import words from '../../reducers/words.json';
 
@@ -20,7 +19,7 @@ class ScoreboardScreen extends Component {
 
         goBack(HomeKey);
     }
-    
+
     render() {
         const { score } = this.props;
 

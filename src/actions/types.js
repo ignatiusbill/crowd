@@ -1,3 +1,4 @@
+export const RESET_SCORE = 'reset_score';
 export const INCREMENT_SCORE = 'increment_score';
 export const PASS = 'pass';
 export const IS_ANSWERING = 'is_answering';

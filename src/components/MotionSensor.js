@@ -3,7 +3,12 @@ import { View } from 'react-native';
 import { Accelerometer } from 'react-native-sensors';
 import { connect } from 'react-redux';
 import { MyText } from './common';
-import { incrementScore, pass, isAnswering, doneAnswering } from '../actions';
+import { 
+    incrementScore, 
+    pass, 
+    isAnswering, 
+    doneAnswering 
+} from '../actions';
 
 class MotionSensor extends Component {
     constructor(props) {
@@ -11,7 +16,7 @@ class MotionSensor extends Component {
         this.state = {
             words: props.words,
             index: 0,
-            accelerationObservable: new Accelerometer({ updateInterval: 500 })
+            accelerationObservable: new Accelerometer({ updateInterval: 250 })
         };
     }
 

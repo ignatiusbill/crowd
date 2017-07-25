@@ -1,4 +1,16 @@
-import { INCREMENT_SCORE, PASS, IS_ANSWERING, DONE_ANSWERING } from './types';
+import { 
+    RESET_SCORE,
+    INCREMENT_SCORE, 
+    PASS, 
+    IS_ANSWERING, 
+    DONE_ANSWERING 
+} from './types';
+
+export const resetScore = () => {
+    return {
+        type: RESET_SCORE
+    };
+};
 
 export const incrementScore = (score) => {
     return {
