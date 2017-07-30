@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { MyText } from './common';
+import { TimerText } from './common';
 
 class Timer extends Component {
     constructor(props) {
@@ -39,22 +39,23 @@ class Timer extends Component {
 
     renderTimer() {
         const { duration, text, waitForToShow } = this.state;
+        const lastSecondToShow = 1;
+        const waitForThreshold = 0;
 
-        if (duration >= 1 && waitForToShow > 0) {
-            return;
-        } else if (duration >= 1 && waitForToShow <= 0) {
-            return <MyText>{text}{'\n'}{duration}</MyText>;
+        if (waitForToShow > waitForThreshold) { // If waitForToShow > 0, ...
+            return <View />;                    // busy return
+        }
+
+        if (duration >= lastSecondToShow) {
+            return <TimerText>{text}{'\n'}{duration}</TimerText>; // display timer
         }
 
         this.componentWillUnmount();
+        return <View />; // has to return at least one UI component or it will throw an error
     }
 
     render() {
-        return (
-            <View>
-                {this.renderTimer()}
-            </View>
-        );
+        return this.renderTimer();
     }
 }
 

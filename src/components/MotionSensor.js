@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
 import { Accelerometer } from 'react-native-sensors';
 import { connect } from 'react-redux';
-import { MyText } from './common';
+import { WordText } from './common';
 import { 
     incrementScore, 
     pass, 
@@ -78,18 +77,14 @@ class MotionSensor extends Component {
         const wordCount = this.state.words.length;
         
         if (index >= wordCount) {
-            return <MyText>We're out of words!</MyText>;
+            return <WordText>We're out of words!</WordText>;
         }
 
-        return <MyText>Current word: {words[index].word}</MyText>;
+        return <WordText>{words[index].word}</WordText>;
     }
 
     render() {
-        return (
-            <View>
-                {this.renderWords()}
-            </View>
-        );
+        return this.renderWords();
     }
 }
 

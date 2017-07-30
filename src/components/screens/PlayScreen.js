@@ -49,22 +49,23 @@ class PlayScreen extends Component {
         const { gameDuration } = this.state;
 
         return (
-            <CardSection>
-                <Timer duration={gameDuration} />
+            <CardSection style={{ flex: 1 }}>
+                 <View style={{ flex: 0.4 }} />  
+
                 <MotionSensor
                     duration={gameDuration} 
                     words={words}
                 />
+                
+                <Timer duration={gameDuration} />
+
+                 <View style={{ flex: 0.4 }} />  
             </CardSection>
         );
     }
 
     render() {
-        return (
-            <View>
-                {this.startGame()}
-            </View>
-        );
+        return this.startGame();
     }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-const MyText = ({ children, style }) => {
+const TitleText = ({ children, style }) => {
     const { textStyle } = styles;
 
     return (
@@ -16,11 +16,11 @@ const styles = {
         alignSelf: 'center',
         justifyContent: 'center',
         color: '#007aff',
-        fontSize: 16,
-        fontWeight: '600',
+        fontSize: 40,
+        fontWeight: 'bold',
         paddingTop: 10,
         paddingBottom: 10
     }
 };
 
-export { MyText };
+export { TitleText };
