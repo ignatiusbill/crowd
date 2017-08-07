@@ -1,15 +1,30 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
+import axios from 'axios';
 import { CardSection, Button, TitleText } from '../common';
 
 class HomeScreen extends Component {
     static navigationOptions = {
-        header: null
+        header: null,
+        words: null
     };
+
+    componentWillMount() {
+        axios.get('https://thawing-sea-57517.herokuapp.com/v1/words.json')
+        .then(response => this.getWords(response));
+    }
 
     componentDidMount() {
         Orientation.lockToPortrait();
+    }
+
+    getWords(res) {
+        if (res.status === 200) {
+            this.setState({ words: res.data.words });
+        } else {
+            console.log('Something went wrong!');
+        }
     }
 
     render() {
@@ -23,7 +38,7 @@ class HomeScreen extends Component {
                 
                 <View style={{ flex: 0.2 }} />
                 
-                <Button onPress={() => navigate('Play')}>
+                <Button onPress={() => navigate('Play', { words: this.state.words })}>
                     Play
                 </Button>
 

@@ -1,17 +1,22 @@
 [
     { 
-        "word": "Apple"
+        "word": "Apple",
+        "correct": false
     },
     { 
-        "word": "Banana"        
+        "word": "Banana",
+        "correct": false
     },
     { 
-        "word": "Candy"        
+        "word": "Candy",
+        "correct": false
     },
     { 
-        "word": "Doritos"        
+        "word": "Doritos",
+        "correct": false
     },
     { 
-        "word": "Eggnog"        
+        "word": "Eggnog",
+        "correct": false
     }
 ]

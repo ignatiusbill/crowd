@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Orientation from 'react-native-orientation-locker';
 import { connect } from 'react-redux';
 import { CardSection, MyText, Button } from '../common';
-import words from '../../reducers/words.json';
 
 class ScoreboardScreen extends Component {
     static navigationOptions = {
@@ -22,6 +21,7 @@ class ScoreboardScreen extends Component {
 
     render() {
         const { score } = this.props;
+        const { words } = this.props.navigation.state.params;
 
         return (
             <CardSection>

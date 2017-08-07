@@ -13,7 +13,7 @@ class MotionSensor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            words: props.words,
+            words: this.props.words,
             index: 0,
             accelerationObservable: new Accelerometer({ updateInterval: 250 })
         };

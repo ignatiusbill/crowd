@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Timer } from '..';
 import MotionSensor from '../MotionSensor';
 import { CardSection } from '../common';
-import words from '../../reducers/words.json';
 import { resetScore } from '../../actions';
 
 class PlayScreen extends Component {
@@ -16,7 +15,7 @@ class PlayScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameDuration: 5,
+            gameDuration: 10,
             delayBeforeScoreboard: 1
         };
         this.props.resetScore();
@@ -40,17 +39,18 @@ class PlayScreen extends Component {
 
     navigateToScoreboard() {
         const { navigate } = this.props.navigation;
-        const { key } = this.props.navigation.state;
+        const { key, words } = this.props.navigation.state.params;
         
-        return navigate('Scoreboard', { HomeKey: key });
+        return navigate('Scoreboard', { HomeKey: key, words });
     }
 
     startGame() {
         const { gameDuration } = this.state;
+        const { words } = this.props.navigation.state.params;
 
         return (
             <CardSection style={{ flex: 1 }}>
-                 <View style={{ flex: 0.4 }} />  
+                 <View style={{ flex: 0.4 }} />
 
                 <MotionSensor
                     duration={gameDuration} 
