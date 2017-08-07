@@ -15,7 +15,7 @@ class PlayScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameDuration: 10,
+            gameDuration: 3,
             delayBeforeScoreboard: 1
         };
         this.props.resetScore();
@@ -39,18 +39,20 @@ class PlayScreen extends Component {
 
     navigateToScoreboard() {
         const { navigate } = this.props.navigation;
-        const { key, words } = this.props.navigation.state.params;
+        const { key } = this.props.navigation.state;
         
-        return navigate('Scoreboard', { HomeKey: key, words });
+        
+        return navigate('Scoreboard', { HomeKey: key });
     }
 
     startGame() {
         const { gameDuration } = this.state;
-        const { words } = this.props.navigation.state.params;
+        const { words } = this.props;
+        console.log('PlayScreen: ', words);
 
         return (
             <CardSection style={{ flex: 1 }}>
-                 <View style={{ flex: 0.4 }} />
+                <View style={{ flex: 0.4 }} />
 
                 <MotionSensor
                     duration={gameDuration} 
@@ -59,7 +61,7 @@ class PlayScreen extends Component {
                 
                 <Timer duration={gameDuration} />
 
-                 <View style={{ flex: 0.4 }} />  
+                <View style={{ flex: 0.4 }} />  
             </CardSection>
         );
     }
@@ -69,4 +71,10 @@ class PlayScreen extends Component {
     }
 }
 
-export default connect(null, { resetScore })(PlayScreen);
+const mapStateToProps = state => {
+    return {
+        words: state.user.words
+    };
+};
+
+export default connect(mapStateToProps, { resetScore })(PlayScreen);

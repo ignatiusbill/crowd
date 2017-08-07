@@ -3,18 +3,20 @@ import {
     INCREMENT_SCORE, 
     PASS, 
     IS_ANSWERING, 
-    DONE_ANSWERING 
+    DONE_ANSWERING,
+    SET_WORD_LIST
 } from '../actions/types';
 
 const INITIAL_STATE = { 
     score: 0,
-    hasAnswered: false
+    hasAnswered: false,
+    words: null
 };
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case RESET_SCORE:
-            return { ...state, ...INITIAL_STATE };
+            return { ...state, score: 0 };
         case INCREMENT_SCORE:
             return { ...state, score: action.payload + 1 };
         /* case PASS - to be replaced with some other logic
@@ -30,6 +32,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, hasAnswered: true };
         case DONE_ANSWERING:
             return { ...state, hasAnswered: false };
+        case SET_WORD_LIST:
+            return { ...state, words: action.payload };
         default:
             return state;
     }

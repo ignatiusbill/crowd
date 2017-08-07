@@ -3,7 +3,8 @@ import {
     INCREMENT_SCORE, 
     PASS, 
     IS_ANSWERING, 
-    DONE_ANSWERING 
+    DONE_ANSWERING,
+    SET_WORD_LIST
 } from './types';
 
 export const resetScore = () => {
@@ -35,5 +36,12 @@ export const isAnswering = () => {
 export const doneAnswering = () => {
     return {
         type: DONE_ANSWERING
+    };
+};
+
+export const setWordList = (words) => {
+    return {
+        type: SET_WORD_LIST,
+        payload: words
     };
 };

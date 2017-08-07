@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { CardSection, Button, TitleText } from '../common';
+import { setWordList } from '../../actions';
 
 class HomeScreen extends Component {
     static navigationOptions = {
-        header: null,
-        words: null
+        header: null
     };
 
     componentWillMount() {
@@ -21,9 +22,10 @@ class HomeScreen extends Component {
 
     getWords(res) {
         if (res.status === 200) {
-            this.setState({ words: res.data.words });
+            this.props.setWordList(res.data.words);
+            console.log(res.data.words);
         } else {
-            console.log('Something went wrong!');
+            this.props.setWordList([]);
         }
     }
 
@@ -38,14 +40,14 @@ class HomeScreen extends Component {
                 
                 <View style={{ flex: 0.2 }} />
                 
-                <Button onPress={() => navigate('Play', { words: this.state.words })}>
+                <Button onPress={() => navigate('Play')}>
                     Play
                 </Button>
 
-                 <View style={{ flex: 0.4 }} /> 
+                <View style={{ flex: 0.4 }} /> 
             </CardSection>
         );
     }
 }
 
-export default HomeScreen;
+export default connect(null, { setWordList })(HomeScreen);

@@ -20,8 +20,9 @@ class ScoreboardScreen extends Component {
     }
 
     render() {
-        const { score } = this.props;
-        const { words } = this.props.navigation.state.params;
+        const { score, words } = this.props;
+        console.log(score);
+        console.log(words);
 
         return (
             <CardSection>
@@ -36,7 +37,8 @@ class ScoreboardScreen extends Component {
 
 const mapStateToProps = state => {
     return {
-        score: state.user.score
+        score: state.user.score,
+        words: state.user.words
     };
 };
 
