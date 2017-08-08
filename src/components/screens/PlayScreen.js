@@ -41,14 +41,12 @@ class PlayScreen extends Component {
         const { navigate } = this.props.navigation;
         const { key } = this.props.navigation.state;
         
-        
         return navigate('Scoreboard', { HomeKey: key });
     }
 
     startGame() {
         const { gameDuration } = this.state;
         const { words } = this.props;
-        console.log('PlayScreen: ', words);
 
         return (
             <CardSection style={{ flex: 1 }}>

@@ -21,8 +21,6 @@ class ScoreboardScreen extends Component {
 
     render() {
         const { score, words } = this.props;
-        console.log(score);
-        console.log(words);
 
         return (
             <CardSection>

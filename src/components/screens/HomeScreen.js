@@ -22,8 +22,14 @@ class HomeScreen extends Component {
 
     getWords(res) {
         if (res.status === 200) {
-            this.props.setWordList(res.data.words);
-            console.log(res.data.words);
+            const modifiedWordList = res.data.words.map(obj => {
+                const newData = {};
+                newData.word = obj.word;
+                newData.correct = false;
+                return newData;
+            });
+
+            this.props.setWordList(modifiedWordList);
         } else {
             this.props.setWordList([]);
         }
