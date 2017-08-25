@@ -1,28 +1,24 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import Orientation from 'react-native-orientation-locker';
 import { connect } from 'react-redux';
-import { Timer } from '..';
-import MotionSensor from '../MotionSensor';
-import { CardSection } from '../common';
-import { resetScore } from '../../actions';
+import { Actions } from 'react-native-router-flux';
+import Timer from '../components/Timer';
+import AccelerometerSensor from '../components/AccelerometerSensor';
+import { CardSection } from '../components/common';
+import { resetScore } from '../actions';
 
 class PlayScreen extends Component {
-    static navigationOptions = {
-        header: null
-    };
-
     constructor(props) {
         super(props);
         this.state = {
-            gameDuration: 3,
+            gameDuration: 20,
             delayBeforeScoreboard: 1
         };
         this.props.resetScore();
     }
 
     componentDidMount() {
-        Orientation.lockToLandscapeRight();
+        Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
 
         const { gameDuration, delayBeforeScoreboard } = this.state;
 
@@ -32,16 +28,13 @@ class PlayScreen extends Component {
     }
 
     componentWillUnmount() {
-        Orientation.lockToPortrait();
+        Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT_UP);
 
         clearTimeout(this.timerID);
     }
 
     navigateToScoreboard() {
-        const { navigate } = this.props.navigation;
-        const { key } = this.props.navigation.state;
-        
-        return navigate('Scoreboard', { HomeKey: key });
+        return Actions.score();
     }
 
     startGame() {
@@ -52,7 +45,7 @@ class PlayScreen extends Component {
             <CardSection style={{ flex: 1 }}>
                 <View style={{ flex: 0.4 }} />
 
-                <MotionSensor
+                <AccelerometerSensor
                     duration={gameDuration} 
                     words={words}
                 />

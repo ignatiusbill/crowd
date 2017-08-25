@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Accelerometer } from 'react-native-sensors';
+import { Accelerometer } from 'expo';
 import { connect } from 'react-redux';
 import { WordText } from './common';
 import { 
@@ -9,47 +9,51 @@ import {
     doneAnswering 
 } from '../actions';
 
-class MotionSensor extends Component {
+class AccelerometerSensor extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             words: this.props.words,
             index: 0,
-            accelerationObservable: new Accelerometer({ updateInterval: 250 })
+            accelerometerData: {}
         };
     }
 
-    componentWillMount() {
-        this.mountAccelerationObservable();
+    componentDidMount() {
+        this.toggle();
     }
-
+    
     componentWillUnmount() {
-        this.unmountAccelerationObservable();
+        this.unsubscribe();
+    }
+    
+    toggle = () => {
+        if (this.subscription) {
+            this.unsubscribe();
+        } else {
+            this.subscribe();
+        }
     }
 
-    mountAccelerationObservable() {
-        const { accelerationObservable } = this.state;
-        
-        accelerationObservable
-            .map(({ z }) => z)
-            .subscribe(speed => this.processMotion(speed));
-
-        setTimeout(() => {
-            accelerationObservable.stop();
-        }, this.props.duration * 1000);
+    subscribe = () => {
+        this.subscription = Accelerometer.addListener((result) => {
+            this.processMotion(result.z);
+        });
+    }
+    
+    unsubscribe = () => {
+        this.subscription && this.subscription.remove();
+        this.subscription = null;
     }
 
-    unmountAccelerationObservable() {
-        this.state.accelerationObservable.stop();
-    }
-
-    processMotion(speed) {
+    processMotion(zSpeed) {
         const { index } = this.state;
         const { score, hasAnswered } = this.props;
         const wordCount = this.state.words.length;
 
-        const isThinking = speed > -10 && speed < 7;
-        const isCorrect = speed <= -10;
+        const isThinking = zSpeed > -0.75 && zSpeed < 0.75;
+        const isCorrect = zSpeed <= -0.75;
 
         if (isThinking) {
             this.props.doneAnswering();
@@ -88,6 +92,14 @@ class MotionSensor extends Component {
     }
 }
 
+function round(n) {
+    if (!n) {
+    return 0;
+    }
+
+    return Math.floor(n * 100) / 100;
+}
+
 const mapStateToProps = state => {
     return {
         score: state.user.score,
@@ -98,4 +110,4 @@ const mapStateToProps = state => {
 export default connect(
     mapStateToProps, 
     { incrementScore, pass, isAnswering, doneAnswering }
-)(MotionSensor);
+)(AccelerometerSensor);

@@ -1,4 +1,27 @@
 {
-  "name": "crowd",
-  "displayName": "crowd"
+  "expo": {
+    "name": "Crowd",
+    "description": "A word-guessing party game!",
+    "slug": "scriptr",
+    "privacy": "public",
+    "sdkVersion": "20.0.0",
+    "version": "0.1",
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "icon": "https://s3.amazonaws.com/exp-us-standard/rnplay/app-icon.png",
+    "loading": {
+      "icon": "https://s3.amazonaws.com/exp-us-standard/rnplay/app-icon.png",
+      "hideExponentText": false
+    },
+    "packagerOpts": {
+      "assetExts": ["ttf", "mp4"]
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.scriptr.crowd"
+    },
+    "android": {
+      "package": "com.scriptr.crowd"
+    }
+  }
 }

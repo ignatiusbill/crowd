@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import reducers from './reducers';
-import ScreenContainer from './components/screens/ScreenContainer';
+import reducers from './src/reducers';
+import Router from './Router';
 
-class App extends Component {
+export default class App extends Component {
     render() {
         const store = createStore(reducers);
 
         return (
             <Provider store={store}>
-                <ScreenContainer store={store} />
+                <Router store={store}/>
             </Provider>
         );
     }
 }
-
-export default App;

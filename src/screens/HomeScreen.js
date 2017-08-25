@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import Orientation from 'react-native-orientation-locker';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { CardSection, Button, TitleText } from '../common';
-import { setWordList } from '../../actions';
+import { Actions } from 'react-native-router-flux';
+import { CardSection, Button, TitleText } from '../components/common';
+import { setWordList } from '../actions';
 
 class HomeScreen extends Component {
-    static navigationOptions = {
-        header: null
-    };
-
     componentWillMount() {
         axios.get('https://thawing-sea-57517.herokuapp.com/v1/words.json')
-        .then(response => this.getWords(response));
+            .then(response => this.getWords(response));
     }
 
     componentDidMount() {
-        Orientation.lockToPortrait();
+        Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT_UP);
     }
 
     getWords(res) {
@@ -35,9 +31,11 @@ class HomeScreen extends Component {
         }
     }
 
-    render() {
-        const { navigate } = this.props.navigation;
+    navToPlay() {
+        Actions.play();
+    }
 
+    render() {
         return (
             <CardSection style={{ flex: 1 }}>
                 <View style={{ flex: 0.2 }} />
@@ -46,7 +44,7 @@ class HomeScreen extends Component {
                 
                 <View style={{ flex: 0.2 }} />
                 
-                <Button onPress={() => navigate('Play')}>
+                <Button onPress={this.navToPlay.bind(this)}>
                     Play
                 </Button>
 

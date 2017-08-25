@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
-import Orientation from 'react-native-orientation-locker';
+import { BackHandler } from 'react-native';
 import { connect } from 'react-redux';
-import { CardSection, MyText, Button } from '../common';
+import { Actions } from 'react-native-router-flux';
+import { CardSection, MyText, Button } from '../components/common';
 
 class ScoreboardScreen extends Component {
-    static navigationOptions = {
-        header: null
-    };
-
     componentDidMount() {
-        Orientation.lockToPortrait();
+        Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT_UP);
+
+        BackHandler.addEventListener('hardwareBackPress', this.navToHome.bind(this));
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.navToHome.bind(this));
     }
 
     navToHome() {
-        const { goBack } = this.props.navigation;
-        const { HomeKey } = this.props.navigation.state.params;
-
-        goBack(HomeKey);
+        Actions.home({ type: 'reset' });
     }
 
     render() {
@@ -25,7 +25,7 @@ class ScoreboardScreen extends Component {
         return (
             <CardSection>
                 <MyText>Your score: {score}/{words.length}</MyText>
-                <Button onPress={() => this.navToHome()}>
+                <Button onPress={this.navToHome.bind(this)}>
                      Go to Main Menu
                 </Button> 
             </CardSection>

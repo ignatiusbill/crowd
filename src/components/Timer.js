@@ -59,4 +59,4 @@ class Timer extends Component {
     }
 }
 
-export { Timer };
+export default Timer;
