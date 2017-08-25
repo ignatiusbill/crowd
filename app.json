@@ -21,7 +21,9 @@
       "bundleIdentifier": "com.scriptr.crowd"
     },
     "android": {
-      "package": "com.scriptr.crowd"
+      "package": "com.scriptr.crowd",
+      "permissions": [],
+      "versionCode": 2
     }
   }
 }
