@@ -81,7 +81,7 @@ class AccelerometerSensor extends Component {
         const wordCount = this.state.words.length;
         
         if (index >= wordCount) {
-            return <WordText>We're out of words!</WordText>;
+            return <WordText>Out of words!</WordText>;
         }
 
         return <WordText>{words[index].word}</WordText>;

@@ -36,7 +36,7 @@ class ScoreboardScreen extends Component {
 const mapStateToProps = state => {
     return {
         score: state.user.score,
-        words: state.user.words
+        words: state.loader.words
     };
 };
 

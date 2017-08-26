@@ -27,7 +27,7 @@ class HomeScreen extends Component {
 
             this.props.setWordList(modifiedWordList);
         } else {
-            this.props.setWordList([]);
+            this.props.setWordList(['Out of words!']);
         }
     }
 

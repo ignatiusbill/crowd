@@ -64,7 +64,7 @@ class PlayScreen extends Component {
 
 const mapStateToProps = state => {
     return {
-        words: state.user.words
+        words: state.loader.words
     };
 };
 

@@ -3,14 +3,12 @@ import {
     INCREMENT_SCORE, 
     PASS, 
     IS_ANSWERING, 
-    DONE_ANSWERING,
-    SET_WORD_LIST
+    DONE_ANSWERING
 } from '../actions/types';
 
 const INITIAL_STATE = { 
     score: 0,
-    hasAnswered: false,
-    words: null
+    hasAnswered: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -32,8 +30,6 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, hasAnswered: true };
         case DONE_ANSWERING:
             return { ...state, hasAnswered: false };
-        case SET_WORD_LIST:
-            return { ...state, words: action.payload };
         default:
             return state;
     }
