@@ -5,16 +5,16 @@ import { Actions } from 'react-native-router-flux';
 import Timer from '../components/Timer';
 import AccelerometerSensor from '../components/AccelerometerSensor';
 import { CardSection } from '../components/common';
-import { resetScore } from '../actions';
+import { resetScoreboard } from '../actions';
 
 class PlayScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameDuration: 20,
+            gameDuration: 10,
             delayBeforeScoreboard: 1
         };
-        this.props.resetScore();
+        this.props.resetScoreboard();
     }
 
     componentDidMount() {
@@ -34,21 +34,17 @@ class PlayScreen extends Component {
     }
 
     navigateToScoreboard() {
-        return Actions.score();
+        return Actions.scoreboard();
     }
 
     startGame() {
         const { gameDuration } = this.state;
-        const { words } = this.props;
 
         return (
             <CardSection style={{ flex: 1 }}>
                 <View style={{ flex: 0.4 }} />
 
-                <AccelerometerSensor
-                    duration={gameDuration} 
-                    words={words}
-                />
+                <AccelerometerSensor duration={gameDuration} />
                 
                 <Timer duration={gameDuration} />
 
@@ -62,10 +58,4 @@ class PlayScreen extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        words: state.loader.words
-    };
-};
-
-export default connect(mapStateToProps, { resetScore })(PlayScreen);
+export default connect(null, { resetScoreboard })(PlayScreen);

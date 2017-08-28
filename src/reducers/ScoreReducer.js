@@ -1,35 +1,38 @@
 import { 
-    RESET_SCORE,
-    INCREMENT_SCORE, 
+    RESET_SCOREBOARD,
+    CORRECT_ANSWER, 
     PASS, 
     IS_ANSWERING, 
-    DONE_ANSWERING
+    DONE_ANSWERING,
+    WORD_SEEN_BY_USER,
+    SET_WORD_LIST_SUCCESS,
+    SET_WORD_LIST_FAIL
 } from '../actions/types';
 
 const INITIAL_STATE = { 
-    score: 0,
+    index: 0,
+    words: null,
     hasAnswered: false
 };
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case RESET_SCORE:
-            return { ...state, score: 0 };
-        case INCREMENT_SCORE:
-            return { ...state, score: action.payload + 1 };
-        /* case PASS - to be replaced with some other logic
-         * Right now, Scoreboard is only showing <# of correct answers>/<total # of words>
-         * so this returning just state is OK
-         * 
-         * In the future, would love to change it to a key-value pair showing which one's 
-         * right or wrong
-         */
+        case RESET_SCOREBOARD:
+            return { ...state, index: 0 };
+        case CORRECT_ANSWER:
+            return { ...state, words: action.payload, index: state.index + 1 };
         case PASS:
-            return state;
+            return { ...state, index: state.index + 1 };
         case IS_ANSWERING:
             return { ...state, hasAnswered: true };
         case DONE_ANSWERING:
             return { ...state, hasAnswered: false };
+        case WORD_SEEN_BY_USER:
+            return { ...state, words: action.payload };
+        case SET_WORD_LIST_SUCCESS:
+            return { ...state, words: action.payload };
+        case SET_WORD_LIST_FAIL:
+            return { ...state, words: action.payload };
         default:
             return state;
     }

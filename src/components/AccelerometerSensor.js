@@ -3,10 +3,11 @@ import { Accelerometer } from 'expo';
 import { connect } from 'react-redux';
 import { WordText } from './common';
 import { 
-    incrementScore, 
+    correctAnswer, 
     pass, 
     isAnswering, 
-    doneAnswering 
+    doneAnswering,
+    wordSeenByUser
 } from '../actions';
 
 class AccelerometerSensor extends Component {
@@ -14,10 +15,9 @@ class AccelerometerSensor extends Component {
         super(props);
 
         this.state = {
-            words: this.props.words,
-            index: 0,
             accelerometerData: {}
         };
+        this.wordCount = this.props.words.length;
     }
 
     componentDidMount() {
@@ -37,6 +37,7 @@ class AccelerometerSensor extends Component {
     }
 
     subscribe = () => {
+        this.subscription = Accelerometer.setUpdateInterval(150);
         this.subscription = Accelerometer.addListener((result) => {
             this.processMotion(result.z);
         });
@@ -48,39 +49,36 @@ class AccelerometerSensor extends Component {
     }
 
     processMotion(zSpeed) {
-        const { index } = this.state;
-        const { score, hasAnswered } = this.props;
-        const wordCount = this.state.words.length;
+        const { hasAnswered, words, index } = this.props; // mapToStateProps
+        const { doneAnswering, correctAnswer, pass, isAnswering, wordSeenByUser } = this.props; // actions
+
+        wordSeenByUser(words, index);
 
         const isThinking = zSpeed > -0.75 && zSpeed < 0.75;
         const isCorrect = zSpeed <= -0.75;
 
         if (isThinking) {
-            this.props.doneAnswering();
+            doneAnswering();
             return;
         }
         
         if (!hasAnswered) {
             if (isCorrect) {
-                if (score < wordCount) {
-                    this.props.incrementScore(score);
+                if (index < this.wordCount) {
+                    correctAnswer(words, index);
                 }
             } else { // PASS
-                this.props.pass(score);
+                pass();
             }
 
-            this.props.isAnswering();
-            this.setState({
-                index: index + 1
-            });
+            isAnswering();
         }
     }
 
     renderWords() {
-        const { words, index } = this.state;
-        const wordCount = this.state.words.length;
+        const { words, index } = this.props;
         
-        if (index >= wordCount) {
+        if (index >= this.wordCount) {
             return <WordText>Out of words!</WordText>;
         }
 
@@ -102,12 +100,13 @@ function round(n) {
 
 const mapStateToProps = state => {
     return {
-        score: state.user.score,
+        index: state.user.index,
+        words: state.user.words,
         hasAnswered: state.user.hasAnswered
     };
 };
 
 export default connect(
     mapStateToProps, 
-    { incrementScore, pass, isAnswering, doneAnswering }
+    { correctAnswer, pass, isAnswering, doneAnswering, wordSeenByUser }
 )(AccelerometerSensor);

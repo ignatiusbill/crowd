@@ -10,7 +10,7 @@ const RouterComponent = () => {
             <Scene key="root" hideNavBar>
                 <Scene key="home" component={HomeScreen} initial />
                 <Scene key="play" component={PlayScreen} />
-                <Scene key="score" component={ScoreboardScreen} />
+                <Scene key="scoreboard" component={ScoreboardScreen} />
             </Scene>
         </Router>
     );
