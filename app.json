@@ -23,7 +23,7 @@
     "android": {
       "package": "com.scriptr.crowd",
       "permissions": [],
-      "versionCode": 2
+      "versionCode": 3
     }
   }
 }
