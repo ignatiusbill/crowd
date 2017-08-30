@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
-import { CardSection, Button, TitleText } from '../components/common';
+import { CardSection, Button, TitleText, Spinner } from '../components/common';
 import { loadWordList, loadSound } from '../actions';
 
 const BASE_URL = 'https://thawing-sea-57517.herokuapp.com';
@@ -26,6 +26,20 @@ class HomeScreen extends Component {
         Actions.play();
     }
 
+    renderButton() {
+        const { isWordListLoading, isSoundLoading } = this.props;
+        
+        if (isWordListLoading && isSoundLoading) {
+            return <Spinner size='large' />;
+        }
+
+        return (
+            <Button onPress={this.navToPlay.bind(this)}>
+                Play
+            </Button>
+        );
+    }
+
     render() {
         return (
             <CardSection style={{ flex: 1 }}>
@@ -35,9 +49,7 @@ class HomeScreen extends Component {
                 
                 <View style={{ flex: 0.2 }} />
                 
-                <Button onPress={this.navToPlay.bind(this)}>
-                    Play
-                </Button>
+                {this.renderButton()}
 
                 <View style={{ flex: 0.4 }} /> 
             </CardSection>
@@ -45,4 +57,11 @@ class HomeScreen extends Component {
     }
 }
 
-export default connect(null, { loadWordList, loadSound })(HomeScreen);
+const mapStateToProps = state => {
+    return {
+        isWordListLoading: state.user.loading,
+        isSoundLoading:  state.sound.loading
+    };
+};
+
+export default connect(mapStateToProps, { loadWordList, loadSound })(HomeScreen);

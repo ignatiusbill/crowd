@@ -6,6 +6,7 @@ import {
     IS_ANSWERING, 
     DONE_ANSWERING,
     WORD_SEEN_BY_USER,
+    LOAD_WORD_LIST,
     LOAD_WORD_LIST_SUCCESS,
     LOAD_WORD_LIST_FAIL
 } from './types';
@@ -56,8 +57,7 @@ export const wordSeenByUser = (words, index) => {
 
 export const loadWordList = ({ url }) => {
     return (dispatch) => {
-        // TODO: handle UI
-        // dispatch({ type: GETTING_WORDS });
+        dispatch({ type: LOAD_WORD_LIST });
         
         axios.get(url)
             .then(response => setWordListSuccess(dispatch, response))
