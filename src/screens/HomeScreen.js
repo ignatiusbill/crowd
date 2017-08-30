@@ -4,11 +4,18 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import { CardSection, Button, TitleText } from '../components/common';
-import { setWordList } from '../actions';
+import { loadWordList, loadSound } from '../actions';
+
+const BASE_URL = 'https://thawing-sea-57517.herokuapp.com';
 
 class HomeScreen extends Component {
     componentWillMount() {
-        this.props.setWordList({ url: 'https://thawing-sea-57517.herokuapp.com/v1/words.json' });
+        const { loadWordList, loadSound } = this.props;
+
+        loadWordList({ url: BASE_URL + '/v1/words.json' });
+
+        loadSound({ soundName: 'correctSFX', uri: BASE_URL + '/static/crowd_correct.mp3' });
+        loadSound({ soundName: 'passSFX', uri: BASE_URL + '/static/crowd_pass.wav' });
     }
 
     componentDidMount() {
@@ -38,4 +45,4 @@ class HomeScreen extends Component {
     }
 }
 
-export default connect(null, { setWordList })(HomeScreen);
+export default connect(null, { loadWordList, loadSound })(HomeScreen);

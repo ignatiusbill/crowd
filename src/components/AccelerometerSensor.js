@@ -49,7 +49,7 @@ class AccelerometerSensor extends Component {
     }
 
     processMotion(zSpeed) {
-        const { hasAnswered, words, index } = this.props; // mapToStateProps
+        const { hasAnswered, words, index, correctSFX, passSFX } = this.props; // mapToStateProps
         const { doneAnswering, correctAnswer, pass, isAnswering, wordSeenByUser } = this.props; // actions
 
         wordSeenByUser(words, index);
@@ -64,14 +64,22 @@ class AccelerometerSensor extends Component {
         
         if (!hasAnswered) {
             if (isCorrect) {
-                if (index < this.wordCount) {
+                if (index < this.wordCount) { // CORRECT
+                    this.playSound(correctSFX);
                     correctAnswer(words, index);
                 }
             } else { // PASS
+                this.playSound(passSFX);
                 pass();
             }
 
             isAnswering();
+        }
+    }
+
+    playSound(sound) {
+        if (sound) {
+            sound.playFromPositionAsync(0);
         }
     }
 
@@ -102,7 +110,9 @@ const mapStateToProps = state => {
     return {
         index: state.user.index,
         words: state.user.words,
-        hasAnswered: state.user.hasAnswered
+        hasAnswered: state.user.hasAnswered,
+        correctSFX: state.sound.correctSFX,
+        passSFX: state.sound.passSFX
     };
 };
 

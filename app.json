@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Crowd",
+    "name": "crowd",
     "description": "A word-guessing party game!",
     "slug": "scriptr",
     "privacy": "public",

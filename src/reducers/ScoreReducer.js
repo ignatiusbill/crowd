@@ -5,8 +5,8 @@ import {
     IS_ANSWERING, 
     DONE_ANSWERING,
     WORD_SEEN_BY_USER,
-    SET_WORD_LIST_SUCCESS,
-    SET_WORD_LIST_FAIL
+    LOAD_WORD_LIST_SUCCESS,
+    LOAD_WORD_LIST_FAIL
 } from '../actions/types';
 
 const INITIAL_STATE = { 
@@ -29,9 +29,9 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, hasAnswered: false };
         case WORD_SEEN_BY_USER:
             return { ...state, words: action.payload };
-        case SET_WORD_LIST_SUCCESS:
+        case LOAD_WORD_LIST_SUCCESS:
             return { ...state, words: action.payload };
-        case SET_WORD_LIST_FAIL:
+        case LOAD_WORD_LIST_FAIL:
             return { ...state, words: action.payload };
         default:
             return state;
