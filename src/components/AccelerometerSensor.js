@@ -49,31 +49,33 @@ class AccelerometerSensor extends Component {
     }
 
     processMotion(zSpeed) {
-        const { hasAnswered, words, index, correctSFX, passSFX } = this.props; // mapToStateProps
-        const { doneAnswering, correctAnswer, pass, isAnswering, wordSeenByUser } = this.props; // actions
+        if (this.props.isPlaying) {
+            const { hasAnswered, words, index, correctSFX, passSFX } = this.props; // mapToStateProps
+            const { doneAnswering, correctAnswer, pass, isAnswering, wordSeenByUser } = this.props; // actions
 
-        wordSeenByUser(words, index);
+            wordSeenByUser(words, index);
 
-        const isThinking = zSpeed > -0.75 && zSpeed < 0.75;
-        const isCorrect = zSpeed <= -0.75;
+            const isThinking = zSpeed > -0.75 && zSpeed < 0.75;
+            const isCorrect = zSpeed <= -0.75;
 
-        if (isThinking) {
-            doneAnswering();
-            return;
-        }
-        
-        if (!hasAnswered) {
-            if (isCorrect) {
-                if (index < this.wordCount) { // CORRECT
-                    this.playSound(correctSFX);
-                    correctAnswer(words, index);
-                }
-            } else { // PASS
-                this.playSound(passSFX);
-                pass();
+            if (isThinking) {
+                doneAnswering();
+                return;
             }
+            
+            if (!hasAnswered) {
+                if (isCorrect) {
+                    if (index < this.wordCount) { // CORRECT
+                        this.playSound(correctSFX);
+                        correctAnswer(words, index);
+                    }
+                } else { // PASS
+                    this.playSound(passSFX);
+                    pass();
+                }
 
-            isAnswering();
+                isAnswering();
+            }
         }
     }
 
@@ -112,7 +114,8 @@ const mapStateToProps = state => {
         words: state.user.words,
         hasAnswered: state.user.hasAnswered,
         correctSFX: state.sound.correctSFX,
-        passSFX: state.sound.passSFX
+        passSFX: state.sound.passSFX,
+        isPlaying: state.router.isPlaying
     };
 };
 

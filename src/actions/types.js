@@ -13,3 +13,8 @@ export const LOAD_WORD_LIST_FAIL = 'load_word_list_fail';
 export const LOAD_SOUND = 'load_sound';
 export const LOAD_SOUND_SUCCESS = 'load_sound_success';
 export const LOAD_SOUND_FAIL = 'load_sound_fail';
+
+// Router action types
+export const NAV_TO_HOME = 'nav_to_home';
+export const NAV_TO_PLAY = 'nav_to_play';
+export const NAV_TO_SCOREBOARD = 'nav_to_scoreboard';

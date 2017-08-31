@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
 import { BackHandler, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
 import { CardSection, MyText, Button } from '../components/common';
+import { navToHome } from '../actions';
 
 class ScoreboardScreen extends Component {
     componentDidMount() {
         Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT_UP);
 
-        BackHandler.addEventListener('hardwareBackPress', this.navToHome);
+        BackHandler.addEventListener('hardwareBackPress', this.props.navToHome);
     }
 
     componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.navToHome);
-    }
-
-    navToHome() {
-        Actions.home({ type: 'reset' });
+        BackHandler.removeEventListener('hardwareBackPress', this.props.navToHome);
     }
 
     renderScore(words) {
@@ -35,7 +31,8 @@ class ScoreboardScreen extends Component {
     }
 
     render() {
-        const { words } = this.props;
+        const { words } = this.props; // states
+        const { navToHome } = this.props; // actions
 
         return (
             <ScrollView>
@@ -43,7 +40,7 @@ class ScoreboardScreen extends Component {
                     <View>
                         {this.renderScore(words)}
                     </View>
-                    <Button onPress={this.navToHome.bind(this)}>
+                    <Button onPress={navToHome.bind(this)}>
                         Go to Main Menu
                     </Button>
                 </CardSection>
@@ -67,4 +64,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(ScoreboardScreen);
+export default connect(mapStateToProps, { navToHome })(ScoreboardScreen);

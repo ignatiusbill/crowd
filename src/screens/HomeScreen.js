@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Actions } from 'react-native-router-flux';
 import { CardSection, Button, TitleText, Spinner } from '../components/common';
-import { loadWordList, loadSound } from '../actions';
+import { loadWordList, loadSound, navToPlay } from '../actions';
 
 const BASE_URL = 'https://thawing-sea-57517.herokuapp.com';
 
@@ -22,19 +21,15 @@ class HomeScreen extends Component {
         Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT_UP);
     }
 
-    navToPlay() {
-        Actions.play();
-    }
-
     renderButton() {
-        const { isWordListLoading, isSoundLoading } = this.props;
+        const { isWordListLoading, isSoundLoading, navToPlay } = this.props;
         
         if (isWordListLoading && isSoundLoading) {
             return <Spinner size='large' />;
         }
 
         return (
-            <Button onPress={this.navToPlay.bind(this)}>
+            <Button onPress={navToPlay.bind(this)}>
                 Play
             </Button>
         );
@@ -64,4 +59,6 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, { loadWordList, loadSound })(HomeScreen);
+export default connect(mapStateToProps, 
+    { loadWordList, loadSound, navToPlay }
+)(HomeScreen);
