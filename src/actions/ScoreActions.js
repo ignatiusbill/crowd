@@ -46,7 +46,7 @@ export const doneAnswering = () => {
 };
 
 export const wordSeenByUser = (words, index) => {
-    let modifiedWordList = words;
+    const modifiedWordList = words;
     modifiedWordList[index].seenByUser = true;
 
     return {

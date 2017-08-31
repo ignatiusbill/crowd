@@ -11,9 +11,7 @@ class HomeScreen extends Component {
         const { loadWordList, loadSound } = this.props;
 
         loadWordList({ url: BASE_URL + '/v1/words.json' });
-
-        loadSound({ soundName: 'correctSFX', uri: BASE_URL + '/static/crowd_correct.mp3' });
-        loadSound({ soundName: 'passSFX', uri: BASE_URL + '/static/crowd_pass.wav' });
+        loadSound();
     }
 
     componentDidMount() {
