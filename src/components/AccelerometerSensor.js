@@ -37,7 +37,7 @@ class AccelerometerSensor extends Component {
     }
 
     subscribe = () => {
-        this.subscription = Accelerometer.setUpdateInterval(150);
+        this.subscription = Accelerometer.setUpdateInterval(200);
         this.subscription = Accelerometer.addListener((result) => {
             this.processMotion(result.z);
         });
@@ -49,7 +49,7 @@ class AccelerometerSensor extends Component {
     }
 
     processMotion(zSpeed) {
-        if (this.props.isPlaying) {
+        if (this.props.isPlaying && this.props.index < this.wordCount) {
             const { hasAnswered, words, index, correctSFX, passSFX } = this.props; // mapToStateProps
             const { doneAnswering, correctAnswer, pass, isAnswering, wordSeenByUser } = this.props; // actions
 
@@ -65,11 +65,9 @@ class AccelerometerSensor extends Component {
             
             if (!hasAnswered) {
                 if (isCorrect) {
-                    if (index < this.wordCount) { // CORRECT
-                        this.playSound(correctSFX);
-                        correctAnswer(words, index);
-                    }
-                } else { // PASS
+                    this.playSound(correctSFX);
+                    correctAnswer(words, index);
+                } else {
                     this.playSound(passSFX);
                     pass();
                 }
