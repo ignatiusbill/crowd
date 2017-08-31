@@ -18,7 +18,7 @@ export const resetScoreboard = () => {
 };
 
 export const correctAnswer = (words, index) => {
-    let updatedWords = words;
+    const updatedWords = words;
     updatedWords[index].correct = true;
 
     return {

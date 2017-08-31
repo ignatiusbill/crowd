@@ -15,7 +15,11 @@ export default (state = INITIAL_STATE, action) => {
         case LOAD_SOUND:
             return { ...state, loading: true };
         case LOAD_SOUND_SUCCESS:
-            return { ...state, [action.payload.soundName]: action.payload.soundObj, loading: false };
+            return { 
+                ...state, 
+                [action.payload.soundName]: action.payload.soundObj, 
+                loading: false 
+            };
         case LOAD_SOUND_FAIL:
             return { ...state, loading: true };
         default:

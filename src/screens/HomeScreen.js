@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { CardSection, Button, TitleText, Spinner } from '../components/common';
 import { loadWordList, loadSound, navToPlay } from '../actions';
 
@@ -54,8 +53,8 @@ class HomeScreen extends Component {
 
 const mapStateToProps = state => {
     return {
-        isWordListLoading: state.user.loading,
-        isSoundLoading:  state.sound.loading
+        isWordListLoading: state.score.loading,
+        isSoundLoading: state.sound.loading
     };
 };
 

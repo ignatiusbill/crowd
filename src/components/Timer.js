@@ -47,7 +47,7 @@ class Timer extends Component {
         }
 
         if (duration >= lastSecondToShow) {
-            return <TimerText>{text}{'\n'}{duration}</TimerText>; // display timer
+            return <TimerText style={this.props.style}>{text}{'\n'}{duration}</TimerText>; // display timer
         }
 
         this.componentWillUnmount();

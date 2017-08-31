@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Accelerometer } from 'expo';
 import { connect } from 'react-redux';
-import { WordText } from './common';
 import { 
     correctAnswer, 
     pass, 
@@ -39,7 +38,7 @@ class AccelerometerSensor extends Component {
     subscribe = () => {
         this.subscription = Accelerometer.setUpdateInterval(200);
         this.subscription = Accelerometer.addListener((result) => {
-            this.processMotion(result.z);
+            this.processMotion(round(result.z));
         });
     }
     
@@ -83,18 +82,8 @@ class AccelerometerSensor extends Component {
         }
     }
 
-    renderWords() {
-        const { words, index } = this.props;
-        
-        if (index >= this.wordCount) {
-            return <WordText>Out of words!</WordText>;
-        }
-
-        return <WordText>{words[index].word}</WordText>;
-    }
-
     render() {
-        return this.renderWords();
+        return null;
     }
 }
 
@@ -108,9 +97,9 @@ function round(n) {
 
 const mapStateToProps = state => {
     return {
-        index: state.user.index,
-        words: state.user.words,
-        hasAnswered: state.user.hasAnswered,
+        index: state.score.index,
+        words: state.score.words,
+        hasAnswered: state.score.hasAnswered,
         correctSFX: state.sound.correctSFX,
         passSFX: state.sound.passSFX,
         isPlaying: state.router.isPlaying

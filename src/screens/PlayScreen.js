@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import Timer from '../components/Timer';
 import AccelerometerSensor from '../components/AccelerometerSensor';
-import { CardSection } from '../components/common';
+import { CardSection, WordText } from '../components/common';
 import { resetScoreboard, navToScoreboard } from '../actions';
 
 class PlayScreen extends Component {
@@ -38,14 +38,67 @@ class PlayScreen extends Component {
 
         return (
             <CardSection style={{ flex: 1 }}>
-                <View style={{ flex: 0.4 }} />
-
-                <AccelerometerSensor duration={gameDuration} />
-                
-                <Timer duration={gameDuration} />
-
-                <View style={{ flex: 0.4 }} />  
+                <AccelerometerSensor duration={gameDuration} />{/* renders nothing */}
+                {this.renderPlayScreen()}
             </CardSection>
+        );
+    }
+
+    renderPlayScreen() {
+        const { tiltingDown, tiltingUp } = this.props;
+        const { tiltingDownViewStyle, tiltingUpViewStyle, defaultViewStyle } = styles;
+
+        if (tiltingDown) {
+            return (
+                <View style={tiltingDownViewStyle}>
+                    {this.renderWords()}
+                    {this.renderTimer()}
+                </View>
+            );
+        } else if (tiltingUp) {
+            return (
+                <View style={tiltingUpViewStyle}>
+                    {this.renderWords()}
+                    {this.renderTimer()}
+                </View>
+            );
+        }
+
+        return (
+            <View style={defaultViewStyle}>
+                {this.renderWords()}
+                {this.renderTimer()}
+            </View>
+        );
+    }
+
+    renderWords() {
+        const { words, index } = this.props;
+        const { wordTextViewStyle } = styles;
+        
+        if (index >= this.wordCount) {
+            return (
+                <View style={wordTextViewStyle}>
+                    <WordText>Out of words!</WordText>
+                </View>
+            );
+        }
+
+        return (
+            <View style={wordTextViewStyle}>
+                <WordText>{words[index].word}</WordText>
+            </View>
+        );
+    }
+
+    renderTimer() {
+        const { gameDuration } = this.state;
+        const { timerViewStyle } = styles;
+
+        return (
+            <View style={timerViewStyle}>
+                <Timer duration={gameDuration} />
+            </View>
         );
     }
 
@@ -54,4 +107,35 @@ class PlayScreen extends Component {
     }
 }
 
-export default connect(null, { resetScoreboard, navToScoreboard })(PlayScreen);
+const styles = {
+    tiltingDownViewStyle: {
+        flex: 1,
+        backgroundColor: '#afe086'
+    },
+    tiltingUpViewStyle: {
+        flex: 1,
+        backgroundColor: '#e0d286'
+    },
+    defaultViewStyle: {
+        flex: 1
+    },
+    wordTextViewStyle: {
+        flex: 1,
+        justifyContent: 'flex-end'
+    },
+    timerViewStyle: {
+        flex: 1,
+        justifyContent: 'flex-start'
+    }
+};
+
+const mapStateToProps = state => {
+    return {
+        index: state.score.index,
+        words: state.score.words,
+        tiltingDown: state.score.tiltingDown,
+        tiltingUp: state.score.tiltingUp
+    };
+};
+
+export default connect(mapStateToProps, { resetScoreboard, navToScoreboard })(PlayScreen);

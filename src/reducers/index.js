@@ -4,7 +4,7 @@ import SoundReducer from './SoundReducer';
 import RouterReducer from './RouterReducer';
 
 export default combineReducers({
-    user: ScoreReducer,
+    score: ScoreReducer,
     sound: SoundReducer,
     router: RouterReducer
 });

@@ -27,11 +27,13 @@ class ScoreboardScreen extends Component {
     
                 return <MyText key={index} style={passedAnswerStyle}>{word}</MyText>;
             }
+
+            return null;
         });
     }
 
     render() {
-        const { words } = this.props; // states
+        const { words } = this.props; // mapToStateProps
         const { navToHome } = this.props; // actions
 
         return (
@@ -51,16 +53,16 @@ class ScoreboardScreen extends Component {
 
 const styles = {
     correctAnswerStyle: {
-        color: 'green'
+        color: '#8ce045'
     },
     passedAnswerStyle: {
-        color: 'orange'
+        color: '#db3b3b'
     }
 };
 
 const mapStateToProps = state => {
     return {
-        words: state.user.words
+        words: state.score.words
     };
 };
 
