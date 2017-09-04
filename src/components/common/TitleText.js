@@ -13,8 +13,6 @@ const TitleText = ({ children, style }) => {
 
 const styles = {
     textStyle: {
-        alignSelf: 'center',
-        justifyContent: 'center',
         color: '#007aff',
         fontSize: 40,
         fontWeight: 'bold',

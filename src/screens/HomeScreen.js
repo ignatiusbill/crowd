@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { CardSection, Button, TitleText, Spinner } from '../components/common';
-import { loadWordList, loadSound, navToPlay } from '../actions';
+import { loadEmptyWordList, loadWordList, loadSound, navToPlay } from '../actions';
 
 const BASE_URL = 'https://thawing-sea-57517.herokuapp.com';
 
@@ -10,6 +10,7 @@ class HomeScreen extends Component {
     componentWillMount() {
         const { loadWordList, loadSound } = this.props;
 
+        // loadEmptyWordList();
         loadWordList({ url: BASE_URL + '/v1/words.json' });
         loadSound();
     }
@@ -35,15 +36,23 @@ class HomeScreen extends Component {
     render() {
         return (
             <CardSection style={{ flex: 1 }}>
-                <View style={{ flex: 0.2 }} />
+                <View 
+                    style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+                    animation={'fadeInDown'}
+                    duration={600}
+                    delay={400}
+                >
+                    <TitleText>Crowd</TitleText>
+                </View>
                 
-                <TitleText>Crowd</TitleText>
-                
-                <View style={{ flex: 0.2 }} />
-                
-                {this.renderButton()}
-
-                <View style={{ flex: 0.4 }} /> 
+                <View 
+                    style={{ flex: 1 }}
+                    animation={'fadeInDown'}
+                    duration={600}
+                    delay={400}
+                >
+                    {this.renderButton()}
+                </View>
             </CardSection>
         );
     }
@@ -57,5 +66,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, 
-    { loadWordList, loadSound, navToPlay }
+    { loadEmptyWordList, loadWordList, loadSound, navToPlay }
 )(HomeScreen);

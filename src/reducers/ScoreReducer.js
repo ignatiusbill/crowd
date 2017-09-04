@@ -5,6 +5,7 @@ import {
     IS_ANSWERING, 
     DONE_ANSWERING,
     WORD_SEEN_BY_USER,
+    LOAD_EMPTY_WORD_LIST,
     LOAD_WORD_LIST,
     LOAD_WORD_LIST_SUCCESS,
     LOAD_WORD_LIST_FAIL
@@ -16,7 +17,8 @@ const INITIAL_STATE = {
     hasAnswered: false,
     loading: false,
     tiltingDown: false,
-    tiltingUp: false
+    tiltingUp: false,
+    indexIncremented: true
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -24,15 +26,26 @@ export default (state = INITIAL_STATE, action) => {
         case RESET_SCOREBOARD:
             return { ...state, index: 0 };
         case CORRECT_ANSWER:
-            return { ...state, words: action.payload, index: state.index + 1, tiltingDown: true };
+            return { ...state, words: action.payload, tiltingDown: true };
         case PASS:
-            return { ...state, index: state.index + 1, tiltingUp: true };
+            return { ...state, tiltingUp: true };
         case IS_ANSWERING:
-            return { ...state, hasAnswered: true };
+            return { ...state, hasAnswered: true, indexIncremented: false };
         case DONE_ANSWERING:
-            return { ...state, hasAnswered: false, tiltingDown: false, tiltingUp: false };
+            return { 
+                ...state, 
+                index: state.index + 1,
+                indexIncremented: true,
+                hasAnswered: false, 
+                tiltingDown: false, 
+                tiltingUp: false
+            };
         case WORD_SEEN_BY_USER:
             return { ...state, words: action.payload };
+        case LOAD_EMPTY_WORD_LIST:
+            // return { ...state, words: {} };
+            // return { ...state, words: [] };
+            return state;
         case LOAD_WORD_LIST:
             return { ...state, loading: true };
         case LOAD_WORD_LIST_SUCCESS:

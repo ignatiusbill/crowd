@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import Timer from '../components/Timer';
 import AccelerometerSensor from '../components/AccelerometerSensor';
@@ -9,22 +9,26 @@ import { resetScoreboard, navToScoreboard } from '../actions';
 class PlayScreen extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            gameDuration: 10,
-            delayBeforeScoreboard: 1
-        };
+
+        this.gameDuration = 10;
+        this.delayBeforeScoreboard = 1;
+        if (this.props.words) {
+            this.wordCount = this.props.words.length;
+        } else {
+            this.wordCount = 0;
+        }
+        
         this.props.resetScoreboard();
     }
 
     componentDidMount() {
         Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
 
-        const { gameDuration, delayBeforeScoreboard } = this.state;
         const { navToScoreboard } = this.props;
 
         this.timerID = setTimeout(() => {
             navToScoreboard();
-        }, (gameDuration + delayBeforeScoreboard) * 1000);
+        }, (this.gameDuration + this.delayBeforeScoreboard) * 1000);
     }
 
     componentWillUnmount() {
@@ -34,13 +38,11 @@ class PlayScreen extends Component {
     }
 
     startGame() {
-        const { gameDuration } = this.state;
-
         return (
-            <CardSection style={{ flex: 1 }}>
-                <AccelerometerSensor duration={gameDuration} />{/* renders nothing */}
+            <View style={{ flex: 1 }}>
+                <AccelerometerSensor duration={this.gameDuration} />{/* subscribes to accelerometer; renders nothing */}
                 {this.renderPlayScreen()}
-            </CardSection>
+            </View>
         );
     }
 
@@ -50,54 +52,84 @@ class PlayScreen extends Component {
 
         if (tiltingDown) {
             return (
-                <View style={tiltingDownViewStyle}>
+                <CardSection style={tiltingDownViewStyle}>
                     {this.renderWords()}
                     {this.renderTimer()}
-                </View>
+                </CardSection>
             );
         } else if (tiltingUp) {
             return (
-                <View style={tiltingUpViewStyle}>
+                <CardSection style={tiltingUpViewStyle}>
                     {this.renderWords()}
                     {this.renderTimer()}
-                </View>
+                </CardSection>
             );
         }
-
+        
         return (
-            <View style={defaultViewStyle}>
+            <CardSection style={defaultViewStyle}>
                 {this.renderWords()}
                 {this.renderTimer()}
-            </View>
+            </CardSection>
         );
     }
 
     renderWords() {
+        const { tiltingDown, tiltingUp } = this.props;
+        const { wordViewContainerStyle } = styles;
+        const animDuration = 100;
+        const delay = 0;
+
+        if (tiltingDown || tiltingUp) {
+            return (
+                <View 
+                    animation={'fadeOutLeft'}
+                    duration={animDuration}
+                    delay={delay}
+                    style={wordViewContainerStyle}
+                >
+                    {this.getWord()}
+                </View>
+            );
+        } 
+
+        return (
+            <View 
+                animation={'fadeInRight'}
+                duration={animDuration}
+                delay={delay}
+                style={wordViewContainerStyle}
+            >
+                {this.getWord()}
+            </View>
+        );
+    }
+
+    renderTimer() {
+        const { timerViewStyle } = styles;
+
+        return (
+            <View style={timerViewStyle}>
+                <Timer duration={this.gameDuration} />
+            </View>
+        );
+    }
+
+    getWord() {
         const { words, index } = this.props;
-        const { wordTextViewStyle } = styles;
+        const { wordViewStyle } = styles;
         
         if (index >= this.wordCount) {
             return (
-                <View style={wordTextViewStyle}>
+                <View style={wordViewStyle}>
                     <WordText>Out of words!</WordText>
                 </View>
             );
         }
 
         return (
-            <View style={wordTextViewStyle}>
+            <View style={wordViewStyle}>
                 <WordText>{words[index].word}</WordText>
-            </View>
-        );
-    }
-
-    renderTimer() {
-        const { gameDuration } = this.state;
-        const { timerViewStyle } = styles;
-
-        return (
-            <View style={timerViewStyle}>
-                <Timer duration={gameDuration} />
             </View>
         );
     }
@@ -119,7 +151,10 @@ const styles = {
     defaultViewStyle: {
         flex: 1
     },
-    wordTextViewStyle: {
+    wordViewContainerStyle: {
+        flex: 1
+    },
+    wordViewStyle: {
         flex: 1,
         justifyContent: 'flex-end'
     },

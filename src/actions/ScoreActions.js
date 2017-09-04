@@ -6,6 +6,7 @@ import {
     IS_ANSWERING, 
     DONE_ANSWERING,
     WORD_SEEN_BY_USER,
+    LOAD_EMPTY_WORD_LIST,
     LOAD_WORD_LIST,
     LOAD_WORD_LIST_SUCCESS,
     LOAD_WORD_LIST_FAIL
@@ -52,6 +53,12 @@ export const wordSeenByUser = (words, index) => {
     return {
         type: WORD_SEEN_BY_USER,
         payload: modifiedWordList
+    };
+};
+
+export const loadEmptyWordList = () => {
+    return {
+        type: LOAD_EMPTY_WORD_LIST
     };
 };
 

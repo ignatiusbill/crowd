@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Accelerometer } from 'expo';
 import { connect } from 'react-redux';
 import { 
@@ -16,7 +16,12 @@ class AccelerometerSensor extends Component {
         this.state = {
             accelerometerData: {}
         };
-        this.wordCount = this.props.words.length;
+
+        if (this.props.words) {
+            this.wordCount = this.props.words.length;
+        } else {
+            this.wordCount = 0;
+        }
     }
 
     componentDidMount() {
@@ -55,12 +60,17 @@ class AccelerometerSensor extends Component {
             wordSeenByUser(words, index);
 
             const isThinking = zSpeed > -0.75 && zSpeed < 0.75;
-            const isCorrect = zSpeed <= -0.75;
 
             if (isThinking) {
-                doneAnswering();
+                if (hasAnswered) {
+                    doneAnswering();
+                    return;
+                }
+                
                 return;
             }
+
+            const isCorrect = zSpeed <= -0.75; // isPassing = zSpeed >= 0.75
             
             if (!hasAnswered) {
                 if (isCorrect) {

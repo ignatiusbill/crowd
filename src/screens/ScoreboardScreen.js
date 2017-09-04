@@ -16,20 +16,24 @@ class ScoreboardScreen extends Component {
     }
 
     renderScore(words) {
-        return words.map((wordObj, index) => {
-            const { word, correct, seenByUser } = wordObj;
-            const { correctAnswerStyle, passedAnswerStyle } = styles;
-
-            if (seenByUser) {
-                if (correct) {
-                    return <MyText key={index} style={correctAnswerStyle}>{word}</MyText>;
+        if (words) {
+            return words.map((wordObj, index) => {
+                const { word, correct, seenByUser } = wordObj;
+                const { correctAnswerStyle, passedAnswerStyle } = styles;
+    
+                if (seenByUser) {
+                    if (correct) {
+                        return <MyText key={index} style={correctAnswerStyle}>{word}</MyText>;
+                    }
+        
+                    return <MyText key={index} style={passedAnswerStyle}>{word}</MyText>;
                 }
     
-                return <MyText key={index} style={passedAnswerStyle}>{word}</MyText>;
-            }
-
-            return null;
-        });
+                return null;
+            });
+        }
+        
+        return <MyText>Empty word list</MyText>;
     }
 
     render() {
