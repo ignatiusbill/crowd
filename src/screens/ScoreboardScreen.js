@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BackHandler, View, ScrollView } from 'react-native';
+import { BackHandler, ScrollView } from 'react-native';
+import { View } from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { CardSection, MyText, Button } from '../components/common';
 import { navToHome } from '../actions';
@@ -17,16 +18,37 @@ class ScoreboardScreen extends Component {
 
     renderScore(words) {
         if (words) {
+            const animDuration = 1000;
+            const delay = 200;
+
             return words.map((wordObj, index) => {
                 const { word, correct, seenByUser } = wordObj;
                 const { correctAnswerStyle, passedAnswerStyle } = styles;
-    
+
                 if (seenByUser) {
                     if (correct) {
-                        return <MyText key={index} style={correctAnswerStyle}>{word}</MyText>;
+                        return (
+                            <View
+                                key={index}
+                                animation={'fadeIn'}
+                                duration={animDuration}
+                                delay={delay * index}
+                            >
+                                <MyText style={correctAnswerStyle}>{word}</MyText>
+                            </View>
+                        );
                     }
         
-                    return <MyText key={index} style={passedAnswerStyle}>{word}</MyText>;
+                    return (
+                        <View
+                            key={index}
+                            animation={'fadeIn'}
+                            duration={animDuration}
+                            delay={delay * index}
+                        >
+                            <MyText style={passedAnswerStyle}>{word}</MyText>
+                        </View>
+                    );
                 }
     
                 return null;
@@ -43,9 +65,14 @@ class ScoreboardScreen extends Component {
         return (
             <ScrollView>
                 <CardSection>
+                    <MyText>
+                        Scoreboard
+                    </MyText>
+
                     <View>
                         {this.renderScore(words)}
                     </View>
+
                     <Button onPress={navToHome.bind(this)}>
                         Go to Main Menu
                     </Button>
