@@ -10,7 +10,7 @@ class PlayScreen extends Component {
     constructor(props) {
         super(props);
 
-        this.gameDuration = 10;
+        this.gameDuration = 15;
         this.delayBeforeScoreboard = 1;
         if (this.props.words) {
             this.wordCount = this.props.words.length;

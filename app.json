@@ -5,7 +5,7 @@
     "slug": "scriptr",
     "privacy": "public",
     "sdkVersion": "20.0.0",
-    "version": "0.4",
+    "version": "0.5",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "https://s3.amazonaws.com/exp-us-standard/rnplay/app-icon.png",
@@ -23,7 +23,7 @@
     "android": {
       "package": "com.scriptr.crowd",
       "permissions": [],
-      "versionCode": 5
+      "versionCode": 6
     }
   }
 }
